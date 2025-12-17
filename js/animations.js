@@ -9,8 +9,21 @@ function initHiddenPhrases() {
     const phrases = document.querySelectorAll('.hidden-phrase');
     
     phrases.forEach(phrase => {
-        phrase.addEventListener('click', function() {
+        // Evento para desktop
+        phrase.addEventListener('click', function(e) {
+            e.preventDefault();
             this.classList.toggle('revealed');
+        });
+        
+        // Evento para móviles
+        phrase.addEventListener('touchend', function(e) {
+            e.preventDefault();
+            this.classList.toggle('revealed');
+        });
+        
+        // Prevenir el comportamiento por defecto del hover en móviles
+        phrase.addEventListener('touchstart', function(e) {
+            e.preventDefault();
         });
     });
 }
