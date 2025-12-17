@@ -33,11 +33,11 @@ function createHeart() {
  */
 function initFloatingHearts() {
     // Generate hearts continuously
-    setInterval(createHeart, 800);
+    setInterval(createHeart, 400);
     
     // Create initial batch of hearts
-    for (let i = 0; i < 10; i++) {
-        setTimeout(createHeart, i * 300);
+    for (let i = 0; i < 20; i++) {
+        setTimeout(createHeart, i * 200);
     }
 }
 
