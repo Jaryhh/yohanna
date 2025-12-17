@@ -1,4 +1,21 @@
 // ============================================
+// HIDDEN PHRASES REVEAL
+// ============================================
+
+/**
+ * Initialize hidden phrases reveal functionality
+ */
+function initHiddenPhrases() {
+    const phrases = document.querySelectorAll('.hidden-phrase');
+    
+    phrases.forEach(phrase => {
+        phrase.addEventListener('click', function() {
+            this.classList.toggle('revealed');
+        });
+    });
+}
+
+// ============================================
 // FLOATING HEARTS ANIMATION
 // ============================================
 
@@ -125,6 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initSparkleEffect();
     initScrollAnimations();
     initSmoothScroll();
+    initHiddenPhrases();
     
     console.log('🎉 Carta de cumpleaños cargada exitosamente!');
 });
