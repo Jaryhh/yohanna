@@ -144,6 +144,94 @@ function initSmoothScroll() {
 }
 
 // ============================================
+// AUDIO PLAYERS (compact multi-player)
+// ============================================
+
+/**
+ * Initialize compact audio players: play/pause, progress, seek, and pause others when one plays
+ */
+function initAudioPlayer() {
+    const players = document.querySelectorAll('.compact-player');
+
+    if (!players || players.length === 0) return;
+
+    // Helper to pause all audios except the provided one
+    function pauseOthers(exceptAudio) {
+        document.querySelectorAll('.cp-audio').forEach(a => {
+            if (a !== exceptAudio) {
+                a.pause();
+            }
+        });
+    }
+
+    players.forEach(player => {
+        const btn = player.querySelector('.cp-play');
+        const audio = player.querySelector('.cp-audio');
+        const progressFilled = player.querySelector('.cp-progress-filled');
+        const progressBar = player.querySelector('.cp-progress');
+
+        if (!btn || !audio || !progressFilled) return;
+
+        // Update UI when play/pause
+        function updateBtn() {
+            btn.textContent = audio.paused ? '▶️' : '⏸️';
+        }
+
+        // Toggle play/pause
+        function togglePlay(e) {
+            if (e) e.preventDefault();
+            if (audio.paused) {
+                pauseOthers(audio);
+                audio.play().catch(() => {});
+            } else {
+                audio.pause();
+            }
+        }
+
+        btn.addEventListener('click', togglePlay);
+        btn.addEventListener('touchend', function(e){ e.preventDefault(); togglePlay(); });
+
+        // Update progress bar as audio plays
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration) {
+                const pct = (audio.currentTime / audio.duration) * 100;
+                progressFilled.style.width = pct + '%';
+            }
+        });
+
+        // When audio starts, pause others and update buttons
+        audio.addEventListener('play', () => {
+            pauseOthers(audio);
+            document.querySelectorAll('.cp-play').forEach(b => b.textContent = '▶️');
+            updateBtn();
+        });
+
+        audio.addEventListener('pause', updateBtn);
+
+        // Seek when clicking/tapping progress bar
+        progressBar.addEventListener('click', (e) => {
+            const rect = progressBar.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            if (audio.duration) audio.currentTime = x * audio.duration;
+        });
+
+        // Touch support for seek
+        progressBar.addEventListener('touchend', (e) => {
+            const touch = e.changedTouches[0];
+            const rect = progressBar.getBoundingClientRect();
+            const x = (touch.clientX - rect.left) / rect.width;
+            if (audio.duration) audio.currentTime = x * audio.duration;
+        });
+
+        // Reset progress when track ends
+        audio.addEventListener('ended', () => {
+            progressFilled.style.width = '0%';
+            btn.textContent = '▶️';
+        });
+    });
+}
+
+// ============================================
 // INITIALIZATION
 // ============================================
 
@@ -156,6 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initScrollAnimations();
     initSmoothScroll();
     initHiddenPhrases();
+    initAudioPlayer();
     
     console.log('🎉 Carta de cumpleaños cargada exitosamente!');
 });
