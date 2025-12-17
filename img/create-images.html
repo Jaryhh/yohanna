@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Generar imágenes de prueba</title>
+</head>
+<body>
+    <h1>Crea las imágenes en esta carpeta</h1>
+    <p>Guarda tus fotos como:</p>
+    <ul>
+        <li><strong>foto1.jpg</strong> - "Tu sonrisa ilumina mi mundo"</li>
+        <li><strong>foto2.jpg</strong> - "Hermosa por dentro y por fuera"</li>
+        <li><strong>foto3.jpg</strong> - "Mi amor eterno"</li>
+    </ul>
+    <p>Las imágenes deben ser cuadradas (1:1 aspect ratio) para mejor presentación.</p>
+    
+    <h2>O genera placeholders automáticamente:</h2>
+    <script>
+        // Crear imágenes de prueba en canvas y descargarlas
+        function createTestImage(text, filename) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 400;
+            canvas.height = 400;
+            const ctx = canvas.getContext('2d');
+            
+            // Gradiente de fondo (rosa)
+            const gradient = ctx.createLinearGradient(0, 0, 400, 400);
+            gradient.addColorStop(0, '#f7e8e8');
+            gradient.addColorStop(1, '#d4a5a5');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, 400, 400);
+            
+            // Texto
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.shadowColor = 'rgba(0,0,0,0.3)';
+            ctx.shadowBlur = 10;
+            ctx.fillText(text, 200, 200);
+            
+            // Crear enlace de descarga
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/jpeg');
+            link.download = filename;
+            link.click();
+        }
+        
+        // Generar las 3 imágenes
+        setTimeout(() => createTestImage('Tu sonrisa\nilumina\nmi mundo', 'photo1.jpg'), 500);
+        setTimeout(() => createTestImage('Hermosa\npor dentro\ny por fuera', 'photo2.jpg'), 1000);
+        setTimeout(() => createTestImage('Mi amor\neterno', 'photo3.jpg'), 1500);
+    </script>
+    <p>Las imágenes se descargarán automáticamente. Guárdalas en esta carpeta (img/).</p>
+</body>
+</html>
