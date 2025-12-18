@@ -245,6 +245,59 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScroll();
     initHiddenPhrases();
     initAudioPlayer();
+    initRelationshipCounter();
     
     console.log('🎉 Carta de cumpleaños cargada exitosamente!');
 });
+
+// ============================================
+// RELATIONSHIP COUNTER
+// ============================================
+
+/**
+ * Initialize relationship counter since 4 Nov 2025 12:58 (local time)
+ */
+function initRelationshipCounter() {
+    const el = document.getElementById('relationshipTime');
+    const startEl = document.querySelector('.relationship-start');
+    if (!el) return;
+
+    // Start date (months are 0-indexed: 10 = November)
+    const startDate = new Date(2025, 10, 4, 12, 58, 0);
+
+    function pad(n) { return n.toString().padStart(2, '0'); }
+
+    function update() {
+        const now = new Date();
+        let diff = now - startDate;
+        if (diff < 0) diff = 0;
+
+        const totalSeconds = Math.floor(diff / 1000);
+        const seconds = totalSeconds % 60;
+        const totalMinutes = Math.floor(totalSeconds / 60);
+        const minutes = totalMinutes % 60;
+        const totalHours = Math.floor(totalMinutes / 60);
+        const hours = totalHours % 24;
+        const days = Math.floor(totalHours / 24);
+
+        // Years (approximate by 365 days)
+        const years = Math.floor(days / 365);
+        const remDays = days % 365;
+
+        let text = '';
+        if (years > 0) {
+            text = `${years} año${years>1?'s':''} ${remDays}d ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+        } else {
+            text = `${days} día${days!==1?'s':''} ${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+        }
+
+        el.textContent = text;
+
+        if (startEl) {
+            startEl.textContent = `Desde: ${startDate.toLocaleString()}`;
+        }
+    }
+
+    update();
+    setInterval(update, 1000);
+}

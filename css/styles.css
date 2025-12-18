@@ -633,6 +633,39 @@ body {
     .cp-title { font-size: 0.92rem; }
 }
 
+/* Relationship counter (subtle background) */
+.relationship-counter {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 0;
+    pointer-events: none;
+    text-align: right;
+    opacity: 0.08;
+    transform: translateZ(0);
+}
+
+.relationship-time {
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    color: var(--text-light);
+    line-height: 1;
+    text-shadow: 0 6px 18px rgba(2,6,23,0.6);
+}
+
+.relationship-start {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--muted-light);
+    margin-top: 6px;
+}
+
+@media (max-width: 480px) {
+    .relationship-counter { right: 12px; bottom: 12px; opacity: 0.09; }
+    .relationship-time { font-size: 1.4rem; }
+    .relationship-start { font-size: 0.82rem; }
+}
+
 /* ============================================
    KEYFRAMES ANIMATIONS
    ============================================ */
