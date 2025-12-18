@@ -245,6 +245,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initSmoothScroll();
     initHiddenPhrases();
     initAudioPlayer();
+    initAudioSection();
     initRelationshipCounter();
     
     console.log('🎉 Carta de cumpleaños cargada exitosamente!');
@@ -258,8 +259,8 @@ document.addEventListener('DOMContentLoaded', function() {
  * Initialize relationship counter since 4 Nov 2025 12:58 (local time)
  */
 function initRelationshipCounter() {
-    const el = document.getElementById('relationshipTime');
-    const startEl = document.querySelector('.relationship-start');
+    const el = document.getElementById('relationshipTimeDisplay') || document.getElementById('relationshipTime');
+    const startEl = document.getElementById('relationshipStartDisplay') || document.querySelector('.relationship-start');
     if (!el) return;
 
     // Start date (months are 0-indexed: 10 = November)
@@ -300,4 +301,94 @@ function initRelationshipCounter() {
 
     update();
     setInterval(update, 1000);
+}
+
+// ============================================
+// AUDIO SECTION (full players)
+// ============================================
+
+function formatTime(seconds) {
+    if (isNaN(seconds)) return '0:00';
+    const s = Math.floor(seconds % 60);
+    const m = Math.floor((seconds % 3600) / 60);
+    const h = Math.floor(seconds / 3600);
+    if (h > 0) return `${h}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+    return `${m}:${s.toString().padStart(2,'0')}`;
+}
+
+function initAudioSection() {
+    const cards = document.querySelectorAll('.audio-card');
+    if (!cards || cards.length === 0) return;
+
+    function pauseAll(except) {
+        document.querySelectorAll('.audio-element').forEach(a => { if (a !== except) a.pause(); });
+    }
+
+    cards.forEach(card => {
+        const btn = card.querySelector('.audio-play');
+        const audio = card.querySelector('.audio-element');
+        const bar = card.querySelector('.audio-bar');
+        const filled = card.querySelector('.audio-bar-filled');
+        const currentEl = card.querySelector('.audio-current');
+        const durationEl = card.querySelector('.audio-duration');
+
+        if (!btn || !audio || !bar) return;
+
+        // metadata -> show duration
+        audio.addEventListener('loadedmetadata', () => {
+            durationEl.textContent = formatTime(audio.duration);
+        });
+
+        // update time
+        audio.addEventListener('timeupdate', () => {
+            if (audio.duration) {
+                const pct = (audio.currentTime / audio.duration) * 100;
+                filled.style.width = pct + '%';
+                currentEl.textContent = formatTime(audio.currentTime);
+            }
+        });
+
+        audio.addEventListener('play', () => {
+            pauseAll(audio);
+            // reset other buttons
+            document.querySelectorAll('.audio-play').forEach(b => b.textContent = '▶️');
+            btn.textContent = '⏸️';
+        });
+
+        audio.addEventListener('pause', () => {
+            btn.textContent = '▶️';
+        });
+
+        audio.addEventListener('ended', () => {
+            filled.style.width = '0%';
+            currentEl.textContent = formatTime(0);
+            btn.textContent = '▶️';
+        });
+
+        function toggle(e) {
+            if (e) e.preventDefault();
+            if (audio.paused) {
+                pauseAll(audio);
+                audio.play().catch(()=>{});
+            } else {
+                audio.pause();
+            }
+        }
+
+        btn.addEventListener('click', toggle);
+        btn.addEventListener('touchend', function(e){ e.preventDefault(); toggle(); });
+
+        // seek
+        bar.addEventListener('click', (e) => {
+            const rect = bar.getBoundingClientRect();
+            const x = (e.clientX - rect.left) / rect.width;
+            if (audio.duration) audio.currentTime = x * audio.duration;
+        });
+        bar.addEventListener('touchend', (e) => {
+            const touch = e.changedTouches[0];
+            const rect = bar.getBoundingClientRect();
+            const x = (touch.clientX - rect.left) / rect.width;
+            if (audio.duration) audio.currentTime = x * audio.duration;
+        });
+    });
 }

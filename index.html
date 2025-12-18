@@ -173,50 +173,85 @@
 
         <div class="decoration"> 💕</div>
 
-        <!-- Compact audio players -->
+        <!-- Audio section (full) -->
         <div class="card animate">
-            <div class="audio-collection">
-                <p class="audio-title">Algunas canciones que me hacen pensar en ti</p>
+            <section class="audio-section">
+                <h2 class="audio-section-title">Algunas canciones que me recuerdan a ti</h2>
+                <p class="audio-section-desc">Toca una para reproducir.</p>
 
-                <div class="compact-player" data-track="Feel It - D4VID">
-                    <button class="cp-play" aria-label="Reproducir / Pausar">▶️</button>
-                    <div class="cp-meta">
-                        <div class="cp-title">Feel It - D4VID</div>
-                        <div class="cp-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                            <div class="cp-progress-filled"></div>
+                <div class="audio-list">
+                    <article class="audio-card" data-track="Feel It - D4VID">
+                        <div class="audio-art">
+                            <img src="img/Feel_It.jpg" alt="Feel It cover">
                         </div>
-                    </div>
-                    <audio class="cp-audio" src="sng/Feel It.mp3" preload="metadata"></audio>
-                </div>
+                        <div class="audio-info">
+                            <div class="audio-title">Feel It</div>
+                            <div class="audio-artist">D4VID</div>
+                            <div class="audio-progress">
+                                <div class="audio-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="audio-bar-filled"></div>
+                                </div>
+                                <div class="audio-times"><span class="audio-current">0:00</span> / <span class="audio-duration">0:00</span></div>
+                            </div>
+                        </div>
+                        <div class="audio-controls">
+                            <button class="audio-play" aria-label="Play">▶️</button>
+                            <audio class="audio-element" src="sng/Feel It.mp3" preload="metadata"></audio>
+                        </div>
+                    </article>
 
-                <div class="compact-player" data-track="Cosas que no te dije - Saiko">
-                    <button class="cp-play" aria-label="Reproducir / Pausar">▶️</button>
-                    <div class="cp-meta">
-                        <div class="cp-title">Cosas que no te dije - Saiko</div>
-                        <div class="cp-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                            <div class="cp-progress-filled"></div>
+                    <article class="audio-card" data-track="Cosas que no te dije - Saiko">
+                        <div class="audio-art">
+                            <img src="img/Cosas que no te dije" alt="Cosas que no te dije cover">
                         </div>
-                    </div>
-                    <audio class="cp-audio" src="sng/Cosas que no te dije.mp3" preload="metadata"></audio>
-                </div>
+                        <div class="audio-info">
+                            <div class="audio-title">Cosas que no te dije</div>
+                            <div class="audio-artist">Saiko</div>
+                            <div class="audio-progress">
+                                <div class="audio-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="audio-bar-filled"></div>
+                                </div>
+                                <div class="audio-times"><span class="audio-current">0:00</span> / <span class="audio-duration">0:00</span></div>
+                            </div>
+                        </div>
+                        <div class="audio-controls">
+                            <button class="audio-play" aria-label="Play">▶️</button>
+                            <audio class="audio-element" src="sng/Cosas que no te dije.mp3" preload="metadata"></audio>
+                        </div>
+                    </article>
 
-                    <div class="compact-player" data-track="A vos - Milo J">
-                    <button class="cp-play" aria-label="Reproducir / Pausar">▶️</button>
-                    <div class="cp-meta">
-                        <div class="cp-title">A vos - Milo J</div>
-                        <div class="cp-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                            <div class="cp-progress-filled"></div>
+                    <article class="audio-card" data-track="A vos - Milo J">
+                        <div class="audio-art">
+                            <img src="img/A vos.jpeg" alt="A vos cover">
                         </div>
-                    </div>
-                    <audio class="cp-audio" src="sng/A vos.mp3" preload="metadata"></audio>
+                        <div class="audio-info">
+                            <div class="audio-title">A vos</div>
+                            <div class="audio-artist">Milo J</div>
+                            <div class="audio-progress">
+                                <div class="audio-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                                    <div class="audio-bar-filled"></div>
+                                </div>
+                                <div class="audio-times"><span class="audio-current">0:00</span> / <span class="audio-duration">0:00</span></div>
+                            </div>
+                        </div>
+                        <div class="audio-controls">
+                            <button class="audio-play" aria-label="Play">▶️</button>
+                            <audio class="audio-element" src="sng/A vos.mp3" preload="metadata"></audio>
+                        </div>
+                    </article>
                 </div>
-            </div>
+            </section>
         </div>
         
-        <!-- Relationship time counter (background) -->
-        <div id="relationshipCounter" class="relationship-counter" aria-hidden="true">
-            <div id="relationshipTime" class="relationship-time">0 días 00:00:00</div>
-            <div class="relationship-start">Desde: 04 Nov 2025 12:58</div>
+        <!-- Relationship section (visible card) -->
+        <div class="card animate">
+            <div class="relationship-section">
+                <p class="section-title">Nuestro tiempo juntos</p>
+                <div id="relationshipDisplay" class="relationship-display">
+                    <div id="relationshipTimeDisplay" class="relationship-time-visible">0 días 00:00:00</div>
+                    <div id="relationshipStartDisplay" class="relationship-start-visible">Desde: 04 Nov 2025 12:58</div>
+                </div>
+            </div>
         </div>
         <div class="card animate">
             <div class="message">

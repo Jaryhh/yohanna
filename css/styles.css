@@ -244,8 +244,8 @@ body {
 
 .photo-grid.single-photo {
     grid-template-columns: 1fr;
-    max-width: 400px;
-    margin: 20px auto;
+    max-width: 420px; /* reduced so loose photos are smaller */
+    margin: 16px auto;
 }
 
 /* Ajustes para que las fotos ocupen el espacio esperado dentro de la tarjeta */
@@ -254,7 +254,7 @@ body {
 }
 
 .photo-grid.single-photo {
-    max-width: 700px; /* permitir imágenes más anchas en pantallas grandes */
+    max-width: 520px; /* slightly smaller on large screens to keep photos compact */
     margin: 0 auto;
     padding: 12px;
 }
@@ -557,7 +557,7 @@ body {
 
 /* Center audio title above the player */
 .audio-title {
-    text-align: center;
+    text-align:left;
     color: var(--muted-light);
     font-family: 'Cormorant Garamond', serif;
     margin: 0 0 8px 0;
@@ -633,37 +633,94 @@ body {
     .cp-title { font-size: 0.92rem; }
 }
 
-/* Relationship counter (subtle background) */
-.relationship-counter {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    z-index: 0;
-    pointer-events: none;
-    text-align: right;
-    opacity: 0.08;
-    transform: translateZ(0);
+/* Relationship section (visible card) */
+.relationship-section {
+    text-align: center;
+    padding: 6px 12px;
 }
 
-.relationship-time {
+.relationship-time-visible {
     font-family: 'Dancing Script', cursive;
-    font-size: clamp(1.6rem, 4vw, 2.6rem);
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
     color: var(--text-light);
-    line-height: 1;
-    text-shadow: 0 6px 18px rgba(2,6,23,0.6);
+    line-height: 1.1;
+    margin-bottom: 6px;
 }
 
-.relationship-start {
+.relationship-start-visible {
     font-family: 'Cormorant Garamond', serif;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--muted-light);
-    margin-top: 6px;
 }
 
 @media (max-width: 480px) {
-    .relationship-counter { right: 12px; bottom: 12px; opacity: 0.09; }
-    .relationship-time { font-size: 1.4rem; }
-    .relationship-start { font-size: 0.82rem; }
+    .relationship-time-visible { font-size: 1.4rem; }
+    .relationship-start-visible { font-size: 0.82rem; }
+}
+
+/* Full audio section styles */
+.audio-section {
+    padding: 10px 6px 6px 6px;
+}
+
+.audio-section-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 6px;
+    color: var(--text-light);
+}
+
+.audio-section-desc {
+    text-align: center;
+    color: var(--muted-light);
+    margin-bottom: 12px;
+}
+
+.audio-list {
+    display: grid;
+    gap: 12px;
+}
+
+.audio-card {
+    display: grid;
+    grid-template-columns: 80px 1fr 60px;
+    gap: 12px;
+    align-items: center;
+    padding: 10px;
+    border-radius: 16px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border: 1px solid rgba(255,255,255,0.03);
+}
+
+.audio-art img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+}
+
+.audio-title { font-family: 'Cormorant Garamond', serif; color: var(--text-light); font-size: 1rem; }
+.audio-artist { color: var(--muted-light); font-size: 0.9rem; }
+
+.audio-progress { margin-top: 8px; }
+.audio-bar { height: 8px; background: rgba(255,255,255,0.03); border-radius: 8px; overflow: hidden; }
+.audio-bar-filled { width: 0%; height: 100%; background: linear-gradient(90deg, var(--accent-mint), var(--accent-lavender)); transition: width 0.12s linear; }
+.audio-times { color: rgba(255,255,255,0.6); font-size: 0.82rem; margin-top: 6px; }
+
+.audio-controls { display:flex; align-items:center; justify-content:center; }
+.audio-play { background: linear-gradient(135deg, var(--accent-pink), var(--accent-mint)); border: none; padding: 10px; border-radius: 10px; cursor: pointer; font-size: 1.05rem; }
+
+@media (max-width: 768px) {
+    .audio-card { grid-template-columns: 64px 1fr 56px; }
+    .audio-art img { width: 64px; height: 64px; }
+}
+
+@media (max-width: 480px) {
+    .audio-card { grid-template-columns: 56px 1fr 48px; padding: 8px; }
+    .audio-art img { width: 56px; height: 56px; }
+    .audio-section-title { font-size: 1.6rem; }
 }
 
 /* ============================================
